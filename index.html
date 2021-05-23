@@ -11,24 +11,51 @@
   <body>
     <header >
       <!-- <h1 class="welcome">Quiz</h1> -->
+      <h2 id="highscore">View Highscores</h2>
       <h2 id="countdown">press start</h2>
     </header>
-    <main>
+    <section id="page1">
+      <h1 style="margin: 40px">Coding Quiz Challenge</h1>
+      <p>Try to answer the following questions within the time limit.  Keep in mind that incorrect anwers will penalize your score time by ten seconds</p>
+      <button style="margin-top: 50px;background-color: green; color:white;margin-left: 30px;width: 60px;" id="Startbt">Start</button>
+    </section>
+    <section id="page2">
     <div id="questionanswers">
-      <section id="question">
-      
+      <section id="question" style="margin-bottom: 30px;">
+      <p id="question"> This is the Question</p>
       </section>
-      <section id="answers">
-      
+      <section id="guesses" style="flex-direction: column;">
+        <input type="checkbox" id="guess1">
+        <label for="guess1" id="guess1label">First guess</label>
+       <br>
+        <input type="checkbox" id="guess2">
+        <label for="guess2" id="guess2label">Second guess</label>
+        <br>
+        <input type="checkbox" id="guess3">
+        <label for="guess3" id="guess3label">Third guess</label>
+        <br>
+        <input type="checkbox" id="guess4">
+        <label for="guess4" id="guess4label">Fourth guess</label>
       </section>
     </div>
     <section id="messages">
-      <p id="particular"></p>
+      <p id="particular" >This is a message</p>
     </section>
+  </section>
+  <section id="page3">
+    <h1 style="margin: 40px">Game Over</h1>
+    <p>Your score was <span id="lastscore">14</span></p>
+    <div id="initsect" style="flex-flow: row;">
+      <label for="initials" id="initialtxt">Enter your initials</label>
+      <input type="text" id="initials" style="width:60px">
+    </div>  
+    <button style="margin-top: 50px;background-color: green; color:white;margin-left: 30px;width: 60px;" id="Intialsbt">Submit</button>
+  </section>
 
 
-    <button style="background-color: green;color:white;margin-left: 30px;" id="Startbt">Start</button>
-  </main>
+
+   
+
     <script src="script.js"></script>
   </body>
 </html>
