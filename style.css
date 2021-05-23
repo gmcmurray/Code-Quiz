@@ -4,6 +4,16 @@
     height: 100px;
     text-align: center;
   }
+header {
+  display: flex;
+  height: 20px;
+  justify-content: flex-end;
+}
+
+#countdown {
+  margin:5px;
+  
+}
   
   .welcome {
     margin-bottom: 20px;

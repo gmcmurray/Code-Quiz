@@ -4,15 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Speed Reader</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1 class="welcome">Welcome to Speed Reader</h1>
-      <h2 id="countdown"></h2>
-      <p id="main"></p>
+    <header >
+      <!-- <h1 class="welcome">Quiz</h1> -->
+      <h2 id="countdown">press start</h2>
+    </header>
+    <main>
+    <div id="questionanswers">
+      <section id="question">
+      
+      </section>
+      <section id="answers">
+      
+      </section>
     </div>
-    <script src="./assets/js/script.js"></script>
+    <section id="messages">
+      <p id="particular"></p>
+    </section>
+
+
+    <button style="background-color: green;color:white;margin-left: 30px;" id="Startbt">Start</button>
+  </main>
+    <script src="script.js"></script>
   </body>
 </html>
+
+
+<!-- 1) For check box, question updates use Data-Attributes like on #19 -->
+<!-- 1b) click event should trigger (bubble up) action on questionanswers div. -->
+<!-- 2) Hide sectionss/pages like in Password homework. -->
+<!-- 3) Store highest score in localstorage, recall to compare and updates -->
+
