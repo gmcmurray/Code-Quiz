@@ -25,16 +25,16 @@
       <p id="question"> This is the Question</p>
       </section>
       <section id="guesses" style="flex-direction: column;">
-        <input type="checkbox" id="guess1">
+        <input type="checkbox" id="guess1" class="checkboxes">
         <label for="guess1" id="guess1label">First guess</label>
        <br>
-        <input type="checkbox" id="guess2">
+        <input type="checkbox" id="guess2" class="checkboxes">
         <label for="guess2" id="guess2label">Second guess</label>
         <br>
-        <input type="checkbox" id="guess3">
+        <input type="checkbox" id="guess3" class="checkboxes">
         <label for="guess3" id="guess3label">Third guess</label>
         <br>
-        <input type="checkbox" id="guess4">
+        <input type="checkbox" id="guess4" class="checkboxes">
         <label for="guess4" id="guess4label">Fourth guess</label>
       </section>
     </div>
@@ -44,7 +44,8 @@
   </section>
   <section id="page3">
     <h1 style="margin: 40px">Game Over</h1>
-    <p>Your score was <span id="lastscore">14</span></p>
+    <h2>Your score was <span id="thisscore">14</span></h2>
+    <h2>Your highest score is <span id="highestscore">99</span></h2>
     <div id="initsect" style="flex-flow: row;">
       <label for="initials" id="initialtxt">Enter your initials</label>
       <input type="text" id="initials" style="width:60px">
@@ -56,6 +57,7 @@
 
    
 
+    <script src="countdown.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
