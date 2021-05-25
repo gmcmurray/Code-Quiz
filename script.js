@@ -28,7 +28,7 @@ const quiz=[
     ["When is it a good time to clean out garage? tomorrow ", "now", "tomorrow", "yesterday", "never","guess2"],
     ["What time is it? time for a nap", "morning", "evening", "time for a nap", "lunchtime","guess3"] 
 ];
-    
+    // Helper tools for debug
 document.addEventListener("keydown", function(e3){
     e3.stopPropagation();
     if(e3.key==="s"){
@@ -38,8 +38,15 @@ document.addEventListener("keydown", function(e3){
 }
 });
 
-// var questions = function(){
-//     // get questions and guesses
+document.addEventListener("keydown", function(e3){
+    e3.stopPropagation();
+    if(e3.key==="h"){
+    console.log("highscore", localStorage.getItem("highscore"));
+}
+});
+
+
+//get questions and guesses and load them
 
 var loadnextquestion = function(t){
     if(t<quiz.length){
@@ -87,6 +94,7 @@ buttons.addEventListener("click",  function(e1){
             score=timeLeft;
             console.log("t ", t, "score ",score);
             timeLeft=0;
+            localStorage.setItem("thisscore", score);
             displayMessage(score);
             return;
                 }  
@@ -94,11 +102,34 @@ buttons.addEventListener("click",  function(e1){
 
 // hide pages 2,3
 
-highscore.addEventListener("click", function(e4){
-    // Fetch high score from local memory
-})
 
-// Start button listener is on, start timer
+
+
+
+// Display score and hide page 2 and reveal page 3
+function displayMessage(score){
+    page2.setAttribute("style" ,"display:none");
+    page3.setAttribute("style" ,"display:flex");
+    
+    thissscore.textContent=localStorage.getItem("thisscore");
+    highestscore.textContent=localStorage.getItem("highscore");
+    console.log( "end of quiz", timeLeft); 
+return;
+};
+
+// JS code run at page load
+// hide pages 2 and 3
+page3.setAttribute("style","display:none");
+page2.setAttribute("style","display:none");
+// Enable highscore access
+highscore.addEventListener("click", function(e4){
+    e4.preventDefault();
+    highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
+
+})
+// Start button listener is on, start countdown timer
+// on start btn click hide page 1, reveal page 2
+
 startbut.addEventListener("click", function(e){
     e.preventDefault();
     e.stopPropagation();
@@ -106,16 +137,7 @@ startbut.addEventListener("click", function(e){
     page1.setAttribute("style","display:none");
     page2.setAttribute("style","display:flex");
 });
-
-// Display score and hide page 2 and reveal page 3
-function displayMessage(score){
-    page2.setAttribute("style" ,"display:none");
-    page3.setAttribute("style" ,"display:flex");
-    thissscore.textContent=score;
-    console.log( "end of quiz", timeLeft);
-return;
-};
-
-page3.setAttribute("style","display:none");
-page2.setAttribute("style","display:none");
+// Load first question
 loadnextquestion(0);
+
+// localStorage.setItem("highscore","25");
