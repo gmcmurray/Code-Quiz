@@ -122,11 +122,24 @@ return;
 page3.setAttribute("style","display:none");
 page2.setAttribute("style","display:none");
 // Enable highscore access
+
 highscore.addEventListener("click", function(e4){
     e4.preventDefault();
-    highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
+    Initialinput();
+    // document.header.appendChild(tag);
+    console.log(document.header)
+    console.log("create form in header");
+    // highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
 
 })
+
+var Initialinput = function() {
+
+    var tag = document.createElement("input");
+    tag.name="initials";
+    // tag.onsubmit();
+    highscore.appendChild(tag);
+}
 // Start button listener is on, start countdown timer
 // on start btn click hide page 1, reveal page 2
 
