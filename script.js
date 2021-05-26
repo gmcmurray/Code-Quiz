@@ -14,11 +14,15 @@ var guess3txt =  document.getElementById("guess3label");
 var guess4txt =  document.getElementById("guess4label");
 var thissscore = document.getElementById("thisscore");
 var initialtxt = document.getElementById("initialtxt");
+var initials = document.getElementById("initials");
+var Intialsbt = document.getElementById("Intialsbt");
 var timeLeft;
+var intls;
 var chkbx = ["guess1","guess2","guess3","guess4"];
 var questionscomplete = false;
 var questionscore=[];
 var t=0;
+var tag;
 
 const quiz=[
     ["Do cows fly? on mars", "yes", "no", "when pushed from a plane", "on mars","guess4"],
@@ -29,25 +33,33 @@ const quiz=[
     ["What time is it? time for a nap", "morning", "evening", "time for a nap", "lunchtime","guess3"] 
 ];
     // Helper tools for debug
-document.addEventListener("keydown", function(e3){
-    e3.stopPropagation();
-    if(e3.key==="s"){
-    console.log("t ",t,"timeleft ",timeLeft,"questionscore ",questionscore,"questionscomplete",questionscomplete);
-    console.log("t ", t, quiz[t])
-    console.log("t - displayed question" ,questiontxt.textContent,"timeLeft ",timeLeft )
-}
-});
+// document.addEventListener("keydown", function(e3){
+//     e3.stopPropagation();
+//     if(e3.key==="s"){
+//     console.log("t ",t,"timeleft ",timeLeft,"questionscore ",questionscore,"questionscomplete",questionscomplete);
+//     console.log("t ", t, quiz[t])
+//     console.log("t - displayed question" ,questiontxt.textContent,"timeLeft ",timeLeft )
+// }
+// });
 
-document.addEventListener("keydown", function(e3){
-    e3.stopPropagation();
-    if(e3.key==="h"){
-    console.log("highscore", localStorage.getItem("highscore"));
-}
-});
+// document.addEventListener("keydown", function(e3){
+//     e3.stopPropagation();
+//     if(e3.key==="h"){
+//     console.log("highscore", localStorage.getItem("highscore"));
+// }
+// });
 
+Intialsbt.addEventListener("click",function(e3){
+   e3.preventDefault();
+   var high = parseInt(localStorage.getItem("highscore"));
+   var now = parseInt(localStorage.getItem("thisscore"));
+   if(now > high){
+       localStorage.setItem("highscore",now);
+   }
+  location.reload();
+});
 
 //get questions and guesses and load them
-
 var loadnextquestion = function(t){
     if(t<quiz.length){
         questiontxt.textContent=quiz[t][0];
@@ -98,19 +110,12 @@ buttons.addEventListener("click",  function(e1){
             displayMessage(score);
             return;
                 }  
-    });
-
-// hide pages 2,3
-
-
-
-
+    },once=true);
 
 // Display score and hide page 2 and reveal page 3
 function displayMessage(score){
     page2.setAttribute("style" ,"display:none");
     page3.setAttribute("style" ,"display:flex");
-    
     thissscore.textContent=localStorage.getItem("thisscore");
     highestscore.textContent=localStorage.getItem("highscore");
     console.log( "end of quiz", timeLeft); 
@@ -123,23 +128,29 @@ page3.setAttribute("style","display:none");
 page2.setAttribute("style","display:none");
 // Enable highscore access
 
+// 
+// Retrieves high score from local memory
 highscore.addEventListener("click", function(e4){
+    console.log("high score");
     e4.preventDefault();
-    Initialinput();
-    // document.header.appendChild(tag);
-    console.log(document.header)
-    console.log("create form in header");
-    // highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
-
-})
-
-var Initialinput = function() {
-
-    var tag = document.createElement("input");
-    tag.name="initials";
-    // tag.onsubmit();
+    highscore.textContent="Enter your initials : "
+    tag = document.createElement("input");
+    tag.setAttribute("type", "text");
+    tag.style.fontWeight="bold";
     highscore.appendChild(tag);
-}
+    intls = tag.textContent;
+    // document.header.appendChild(tag);
+    console.log("create form in header");
+    console.log("initials ",intls)
+    // e4.removeEventListener("click",hgscore);
+    // highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
+, once=true});
+
+
+// var Initialinput = function() {
+    
+//     // e4.removeEventListener("click",hgscore);
+// }
 // Start button listener is on, start countdown timer
 // on start btn click hide page 1, reveal page 2
 
@@ -151,6 +162,7 @@ startbut.addEventListener("click", function(e){
     page2.setAttribute("style","display:flex");
 });
 // Load first question
+page2.setAttribute("style","display:none");
+page3.setAttribute("style","display:none");
 loadnextquestion(0);
 
-// localStorage.setItem("highscore","25");
