@@ -18,7 +18,7 @@ header {
   margin:10px 100px 10px 100px;
   align-content:center;
 }
-#page1 *, #page2 *, #page3 *{
+#page1 *, #page2 , #page3 *{
   align-self: center;
 }
 
@@ -47,4 +47,13 @@ header {
     padding: 10px;
     width: 100%;
     height: 25px;
+  }
+
+  input[type='checkbox'] {
+    display: inline-block;
+    margin-right: 0.25rem;
+  }
+
+li {
+    margin:5px;
   }

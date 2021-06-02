@@ -19,24 +19,30 @@
       <p>Try to answer the following questions within the time limit.  Keep in mind that incorrect anwers will penalize your score time by ten seconds</p>
       <button style="margin-top: 50px;background-color: green; color:white;margin-left: 30px;width: 60px;" id="Startbt">Start</button>
     </section>
-    <section id="page2">
-    <div id="questionanswers">
+    <section id="page2" ;style="align-items: flex-start">
+    <div id="questionanswers" style="padding-left : 10vw; padding-right : 10vw; margin-top : 20vh">
       <section id="question" style="margin-bottom: 30px;">
-      <p id="question"> This is the Question</p>
+      <h2 id="question" > This is the Question</h2>
       </section>
       <section id="guesses" style="flex-direction: column;">
-        <input type="checkbox" id="guess1" class="checkboxes">
-        <label for="guess1" id="guess1label">First guess</label>
-       <br>
-        <input type="checkbox" id="guess2" class="checkboxes">
-        <label for="guess2" id="guess2label">Second guess</label>
-        <br>
-        <input type="checkbox" id="guess3" class="checkboxes">
-        <label for="guess3" id="guess3label">Third guess</label>
-        <br>
-        <input type="checkbox" id="guess4" class="checkboxes">
-        <label for="guess4" id="guess4label">Fourth guess</label>
-      </section>
+      <ul class="checkboxes">
+        <li>
+          <input type="radio" id="guess1" >
+          <label for="guess1" id="guess1label">First guess</label>
+        </li>
+        <li>
+          <input type="radio" id="guess2" >
+          <label for="guess2" id="guess2label">Second guess</label>
+        </li>
+        <li>
+          <input type="radio" id="guess3" >
+          <label for="guess3" id="guess3label">Third guess</label>
+        </li>
+        <li>
+          <input type="radio" id="guess4" >
+          <label for="guess4" id="guess4label">Fourth guess</label>
+        </li>
+      </ul>
     </div>
     <section id="messages">
       <p id="particular" >This is a message</p>

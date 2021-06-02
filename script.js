@@ -1,7 +1,7 @@
 var timerEl = document.getElementById('countdown');
 var mainEl = document.getElementById('main');
 var highscore = document.getElementById('highscore');
-var buttons = document.querySelector("#questionanswers");
+var buttons = document.getElementById("questionanswers");
 var startbut = document.getElementById("Startbt");
 var page1 =  document.getElementById("page1");
 var page2 =  document.getElementById("page2");
@@ -25,14 +25,14 @@ var t=0;
 var tag;
 
 const quiz=[
-    ["Do cows fly? on mars", "yes", "no", "when pushed from a plane", "on mars","guess4"],
-    ["Do dogs drink milk? no ", "yes", "no", "sometimes", "after losing a bet","guess2"],
-    ["When will i finish coding? bad question", "soon", "saturday", "bad question", "never","guess3"],
-    ["Do horse flies prefer chickens ? only city flies", "yes", "no", "only city flies","horses","guess3"],
-    ["When is it a good time to clean out garage? tomorrow ", "now", "tomorrow", "yesterday", "never","guess2"],
-    ["What time is it? time for a nap", "morning", "evening", "time for a nap", "lunchtime","guess3"] 
+    ["Do cows fly? ", "yes", "no", "when pushed from a plane", "on mars","guess4"],
+    ["Do dogs drink milk? ", "yes", "no", "sometimes", "after losing a bet","guess2"],
+    ["When will i finish coding? ", "soon", "saturday", "bad question", "never","guess3"],
+    ["Do horse flies prefer chickens ? ", "yes", "no", "only city flies","horses","guess3"],
+    ["When is it a good time to clean out garage? ", "now", "tomorrow", "yesterday", "never","guess2"],
+    ["What time is it? ", "morning", "evening", "time for a nap", "lunchtime","guess3"] 
 ];
-    // Helper tools for debug
+// Helper tools for debug
 // document.addEventListener("keydown", function(e3){
 //     e3.stopPropagation();
 //     if(e3.key==="s"){
@@ -68,7 +68,6 @@ var loadnextquestion = function(t){
         guess3txt.textContent=quiz[t][3];
         guess4txt.textContent=quiz[t][4];
     }
-// clearinputs(); dynamically appdn 
 };
 
 var checkans = function(t,guess){
@@ -93,24 +92,28 @@ var clearinputs = function(){
         return;
 }
 
-
-// Use Buttons instead of check
-buttons.addEventListener("click",  function(e1){
+// Radio button event listner for guesses targeting questionanswer id 
+// using bubbling up of any button to trigger event.
+buttons.addEventListener("click", function(e1){
         e1.stopPropagation();
         e1.preventDefault();
-        console.log("t ", t, e1.target.id, quiz[t][0],timeLeft);
+        if(t<quiz.length){
         checkans(t,e1.target.id);
+         }       
+    // Load next question     
         t++;
-        if(t<quiz.length){loadnextquestion(t);} 
+        // console.log("tb ", t, e1.target.id, quiz[t][0],questionscore,timeLeft);
+        if(t<quiz.length){loadnextquestion(t);}
         else{
             score=timeLeft;
             console.log("t ", t, "score ",score);
             timeLeft=0;
             localStorage.setItem("thisscore", score);
             displayMessage(score);
-            return;
+            return false;
                 }  
-    },once=true);
+    });
+
 
 // Display score and hide page 2 and reveal page 3
 function displayMessage(score){
@@ -122,35 +125,37 @@ function displayMessage(score){
 return;
 };
 
-// JS code run at page load
-// hide pages 2 and 3
-page3.setAttribute("style","display:none");
-page2.setAttribute("style","display:none");
-// Enable highscore access
 
-// 
-// Retrieves high score from local memory
-highscore.addEventListener("click", function(e4){
+// Enable highscore access
+var tag;
+var initialshs;
+var tagbutton;
+// Retrieves high score from local memory from top left header element
+highscore.addEventListener("click",function (e4){
     console.log("high score");
     e4.preventDefault();
-    highscore.textContent="Enter your initials : "
+    highscore.textContent="Enter your initials : ";
     tag = document.createElement("input");
-    tag.setAttribute("type", "text");
-    tag.style.fontWeight="bold";
+    taglabel = document.createElement("label");
+    tagbutton = document.createElement("button");
+    tag.id="ints";
+    tagbutton.innerHTML="submit";
+    // taglabel.htmlFor="ints";
+    tag.type="text";
+    tag.placeholder="type here";
+    // highscore.appendChild(taglabel);
     highscore.appendChild(tag);
-    intls = tag.textContent;
-    // document.header.appendChild(tag);
-    console.log("create form in header");
-    console.log("initials ",intls)
-    // e4.removeEventListener("click",hgscore);
-    // highscore.textContent="Highscore is "+ localStorage.getItem("highscore")
-, once=true});
+    highscore.appendChild(tagbutton);
+    tagbutton.addEventListener('click',function(e5){
+        // localStorage.getItem("GHM")
+        // console.log(tag.value);
+        // console.log("inside high score",)
+    if(tag.value != null){
+        highscore.textContent=tag.value+" High Score is: "+localStorage.getItem(tag.value);}
+        else {highscore.textContent=" Nobody with these initials, keep playing and register your score "}
+    },{once:true});
+    } ,{once: true});
 
-
-// var Initialinput = function() {
-    
-//     // e4.removeEventListener("click",hgscore);
-// }
 // Start button listener is on, start countdown timer
 // on start btn click hide page 1, reveal page 2
 
@@ -161,8 +166,12 @@ startbut.addEventListener("click", function(e){
     page1.setAttribute("style","display:none");
     page2.setAttribute("style","display:flex");
 });
-// Load first question
+
+// JS code run at page load
+// hide pages 2 and 3 and Load first question
 page2.setAttribute("style","display:none");
 page3.setAttribute("style","display:none");
 loadnextquestion(0);
+// localStorage.setItem("GHM","107");
+console.log("length of quiz ", localStorage.getItem("Frank"))
 
