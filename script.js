@@ -16,6 +16,7 @@ var thissscore = document.getElementById("thisscore");
 var initialtxt = document.getElementById("initialtxt");
 var initials = document.getElementById("initials");
 var Intialsbt = document.getElementById("Intialsbt");
+var highestscore=document.getElementById("highestscore");
 var timeLeft;
 var intls;
 var chkbx = ["guess1","guess2","guess3","guess4"];
@@ -49,17 +50,26 @@ const quiz=[
 // }
 // });
 
-Intialsbt.addEventListener("click",function(e3){
-   e3.preventDefault();
-   var high = parseInt(localStorage.getItem("highscore"));
-   var now = parseInt(localStorage.getItem("thisscore"));
-   if(now > high){
-       localStorage.setItem("highscore",now);
-   }
-  location.reload();
+// Final initial submit button event listner
+Intialsbt.addEventListener("click",function(e7){
+   e7.preventDefault();
+   var latestinit=initials.value;
+   if(localStorage.getItem(latestinit)!==null){
+        var high = parseInt(localStorage.getItem(latestinit));
+        var now = parseInt(localStorage.getItem("thisscore"));
+        if(now > high){
+            localStorage.setItem(latestinit,now);
+            highestscore.textContent=now;
+            }
+        else{highestscore.textContent=localStorage.getItem(latestinit);}
+    }
+    // Firstime player-load score and set highscore to now
+   else{ localStorage.setItem(latestinit,now);
+    highestscore.textContent = now}
+//   location.reload();
 });
 
-//get questions and guesses and load them
+//get question 't' and guesses and load them from quiz[t]
 var loadnextquestion = function(t){
     if(t<quiz.length){
         questiontxt.textContent=quiz[t][0];
@@ -70,6 +80,7 @@ var loadnextquestion = function(t){
     }
 };
 
+// Checks to see if answer is correct, if not dock time by 10 seconds
 var checkans = function(t,guess){
     clearinputs();
     if(guess===quiz[t][5]){
@@ -79,11 +90,12 @@ var checkans = function(t,guess){
     else{
         message.textContent="Previous Question was Wrong";
         questionscore[t]=0;
-        timeLeft-=5;
+        timeLeft-=10;
     }
     return;
 };
 
+// Clears all inputs
 var clearinputs = function(){
     for (var x=0; x < chkbx.length;x++){
         document.getElementById(chkbx[x]).checked=false;
@@ -100,33 +112,28 @@ buttons.addEventListener("click", function(e1){
         if(t<quiz.length){
         checkans(t,e1.target.id);
          }       
-    // Load next question     
+    // increment to next question and load     
         t++;
-        // console.log("tb ", t, e1.target.id, quiz[t][0],questionscore,timeLeft);
         if(t<quiz.length){loadnextquestion(t);}
         else{
             score=timeLeft;
             console.log("t ", t, "score ",score);
             timeLeft=0;
             localStorage.setItem("thisscore", score);
-            displayMessage(score);
+            displayMessage(localStorage.getItem("thisscore"));
             return false;
                 }  
     });
-
 
 // Display score and hide page 2 and reveal page 3
 function displayMessage(score){
     page2.setAttribute("style" ,"display:none");
     page3.setAttribute("style" ,"display:flex");
     thissscore.textContent=localStorage.getItem("thisscore");
-    highestscore.textContent=localStorage.getItem("highscore");
-    console.log( "end of quiz", timeLeft); 
+    // console.log( "end of quiz", timeLeft); 
 return;
 };
 
-
-// Enable highscore access
 var tag;
 var initialshs;
 var tagbutton;
@@ -136,23 +143,23 @@ highscore.addEventListener("click",function (e4){
     e4.preventDefault();
     highscore.textContent="Enter your initials : ";
     tag = document.createElement("input");
-    taglabel = document.createElement("label");
     tagbutton = document.createElement("button");
-    tag.id="ints";
     tagbutton.innerHTML="submit";
-    // taglabel.htmlFor="ints";
     tag.type="text";
     tag.placeholder="type here";
-    // highscore.appendChild(taglabel);
     highscore.appendChild(tag);
     highscore.appendChild(tagbutton);
     tagbutton.addEventListener('click',function(e5){
-        // localStorage.getItem("GHM")
-        // console.log(tag.value);
-        // console.log("inside high score",)
-    if(tag.value != null){
-        highscore.textContent=tag.value+" High Score is: "+localStorage.getItem(tag.value);}
+    // Checks for if initials exist in local storage
+    if(localStorage.getItem(tag.value) !== null){
+        highscore.textContent=tag.value + " High Score is: "+localStorage.getItem(tag.value);}
         else {highscore.textContent=" Nobody with these initials, keep playing and register your score "}
+        var resset = document.createElement("button");
+        resset.innerHTML="Reset";
+        highscore.appendChild(resset);
+        resset.addEventListener('click', function(e6){
+            location.reload();
+        })
     },{once:true});
     } ,{once: true});
 
