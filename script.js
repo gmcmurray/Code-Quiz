@@ -14,17 +14,16 @@ var guess3txt =  document.getElementById("guess3label");
 var guess4txt =  document.getElementById("guess4label");
 var thissscore = document.getElementById("thisscore");
 var initialtxt = document.getElementById("initialtxt");
+var initsect = document.getElementById("initsect");
 var initials = document.getElementById("initials");
 var Intialsbt = document.getElementById("Intialsbt");
 var highestscore=document.getElementById("highestscore");
 var timeLeft;
 var intls;
 var chkbx = ["guess1","guess2","guess3","guess4"];
-var questionscomplete = false;
 var questionscore=[];
 var t=0;
-var tag;
-
+// Quiz stored as array with questions, guesses and answer.
 const quiz=[
     ["Do cows fly? ", "yes", "no", "when pushed from a plane", "on mars","guess4"],
     ["Do dogs drink milk? ", "yes", "no", "sometimes", "after losing a bet","guess2"],
@@ -33,30 +32,13 @@ const quiz=[
     ["When is it a good time to clean out garage? ", "now", "tomorrow", "yesterday", "never","guess2"],
     ["What time is it? ", "morning", "evening", "time for a nap", "lunchtime","guess3"] 
 ];
-// Helper tools for debug
-// document.addEventListener("keydown", function(e3){
-//     e3.stopPropagation();
-//     if(e3.key==="s"){
-//     console.log("t ",t,"timeleft ",timeLeft,"questionscore ",questionscore,"questionscomplete",questionscomplete);
-//     console.log("t ", t, quiz[t])
-//     console.log("t - displayed question" ,questiontxt.textContent,"timeLeft ",timeLeft )
-// }
-// });
-
-// document.addEventListener("keydown", function(e3){
-//     e3.stopPropagation();
-//     if(e3.key==="h"){
-//     console.log("highscore", localStorage.getItem("highscore"));
-// }
-// });
-
-// Final initial submit button event listner
+// End game- initial input retrieve/update high score, playagain.
 Intialsbt.addEventListener("click",function(e7){
    e7.preventDefault();
    var latestinit=initials.value;
+   var now = parseInt(localStorage.getItem("thisscore"));
    if(localStorage.getItem(latestinit)!==null){
         var high = parseInt(localStorage.getItem(latestinit));
-        var now = parseInt(localStorage.getItem("thisscore"));
         if(now > high){
             localStorage.setItem(latestinit,now);
             highestscore.textContent=now;
@@ -66,7 +48,13 @@ Intialsbt.addEventListener("click",function(e7){
     // Firstime player-load score and set highscore to now
    else{ localStorage.setItem(latestinit,now);
     highestscore.textContent = now}
-//   location.reload();
+    Intialsbt.parentNode.removeChild(Intialsbt);
+    var playagain = document.createElement("button");
+    playagain.innerHTML="PlayAgain";
+    initsect.appendChild(playagain);
+    playagain.addEventListener('click',function(e9){
+        location.reload();
+    })
 });
 
 //get question 't' and guesses and load them from quiz[t]
@@ -107,30 +95,28 @@ var clearinputs = function(){
 // Radio button event listner for guesses targeting questionanswer id 
 // using bubbling up of any button to trigger event.
 buttons.addEventListener("click", function(e1){
-        e1.stopPropagation();
-        e1.preventDefault();
-        if(t<quiz.length){
-        checkans(t,e1.target.id);
-         }       
-    // increment to next question and load     
-        t++;
-        if(t<quiz.length){loadnextquestion(t);}
-        else{
-            score=timeLeft;
-            console.log("t ", t, "score ",score);
-            timeLeft=0;
-            localStorage.setItem("thisscore", score);
-            displayMessage(localStorage.getItem("thisscore"));
-            return false;
-                }  
+    e1.stopPropagation();
+    e1.preventDefault();
+    if(t<quiz.length){
+    checkans(t,e1.target.id);
+        }       
+// increment to next question and load     
+    t++;
+    if(t<quiz.length){loadnextquestion(t);}
+    else{
+        score=timeLeft;
+        timeLeft=0;
+        localStorage.setItem("thisscore", score);
+        displayMessage(localStorage.getItem("thisscore"));
+        return false;
+            }  
     });
 
-// Display score and hide page 2 and reveal page 3
+// Display current score and hide page 2 and reveal page 3
 function displayMessage(score){
     page2.setAttribute("style" ,"display:none");
     page3.setAttribute("style" ,"display:flex");
     thissscore.textContent=localStorage.getItem("thisscore");
-    // console.log( "end of quiz", timeLeft); 
 return;
 };
 
@@ -139,18 +125,17 @@ var initialshs;
 var tagbutton;
 // Retrieves high score from local memory from top left header element
 highscore.addEventListener("click",function (e4){
-    console.log("high score");
     e4.preventDefault();
-    highscore.textContent="Enter your initials : ";
+    highscore.textContent="Enter initials : ";
     tag = document.createElement("input");
     tagbutton = document.createElement("button");
     tagbutton.innerHTML="submit";
     tag.type="text";
-    tag.placeholder="type here";
+    tag.placeholder="Cap letters, no spaces";
     highscore.appendChild(tag);
     highscore.appendChild(tagbutton);
     tagbutton.addEventListener('click',function(e5){
-    // Checks for if initials exist in local storage
+// Checks for if initials exist in local storage
     if(localStorage.getItem(tag.value) !== null){
         highscore.textContent=tag.value + " High Score is: "+localStorage.getItem(tag.value);}
         else {highscore.textContent=" Nobody with these initials, keep playing and register your score "}
@@ -174,11 +159,9 @@ startbut.addEventListener("click", function(e){
     page2.setAttribute("style","display:flex");
 });
 
-// JS code run at page load
+// Start JS code
 // hide pages 2 and 3 and Load first question
 page2.setAttribute("style","display:none");
 page3.setAttribute("style","display:none");
 loadnextquestion(0);
-// localStorage.setItem("GHM","107");
-console.log("length of quiz ", localStorage.getItem("Frank"))
 
